@@ -65,7 +65,7 @@ class OXgame:
 
         return 0
     
-    def cpu(self):
+    def cpu(self, persent):
         select_list = []
         return_ = None
         BOARD_copy = self.BOARD.copy()
@@ -73,7 +73,7 @@ class OXgame:
             if self.BOARD[i] == 0:
                 select_list.append(i)
         return_ = select_list[random.randrange(len(select_list))]
-        if random.randint(0, 100) > 70:
+        if random.randint(0, 100) < persent:
             for i in select_list:
                 BOARD_copy[i] = 1
                 if self.judge(BOARD_copy) == 1:
@@ -87,28 +87,7 @@ class OXgame:
         
         return return_
     
-    def cpu2(self):
-        select_list = []
-        return_ = None
-        BOARD_copy = self.BOARD.copy()
-        for i in range(len(self.BOARD)):
-            if self.BOARD[i] == 0:
-                select_list.append(i)
-        return_ = select_list[random.randrange(len(select_list))]
-        for i in select_list:
-            BOARD_copy[i] = 1
-            if self.judge(BOARD_copy) == 1:
-                return_ = i
-            BOARD_copy[i] = 0
-        for i in select_list:
-            BOARD_copy[i] = 2
-            if self.judge(BOARD_copy) == 2:
-                return_ = i
-            BOARD_copy[i] = 0
-        
-        return return_
-    
-    def game_step(self, action):
+    def game_step(self, action, cpu_persent = 100):
         self.continue_ = False
         if self.setstoneO(action) == False:
                 return -1
@@ -118,7 +97,7 @@ class OXgame:
                 return 1
             elif judge_ == 3:
                 return 0
-            if self.setstoneX(self.cpu()) == True:
+            if self.setstoneX(self.cpu(cpu_persent)) == True:
                 return 1
             else:
                 judge_ = self.judge(self.BOARD)
