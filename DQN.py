@@ -193,7 +193,7 @@ def model_learn(episode, batch_size):
                     memory["next_state"] = None
                 episode_memory.append(memory)
         
-        learn_data_index = np.random.randint(0, len(episode_memory), batch_size)
+        learn_data_index = np.random.randint(0, len(episode_memory), len(episode_memory))
 
         x_data = []
         t_data = []
@@ -303,7 +303,7 @@ def model_play():
                     break
 
 if __name__ == "__main__":
-    episode = 50000
+    episode = 20000
     batch_size = 10
 
     model_learn(episode, batch_size)
